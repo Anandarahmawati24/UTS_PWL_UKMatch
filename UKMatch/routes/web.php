@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\KategoriUkmController;
 use App\Http\Controllers\UkmController;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Auth;
 use Monolog\Level;
 
 /*
@@ -18,10 +20,17 @@ use Monolog\Level;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/', function () {
+  return redirect()->route('login');
+});
 
-//Route::get('/', function () {
-  //  return view('welcome');});
-Route::get('/', [WelcomeController::class, 'index']);
+Route::pattern('id','[0-9]+'); //artinya ketika ada parameter {id}, maka harus berupa angka
+
+Route::get('login',[AuthController::class,'login'])->name('login');
+Route::post('login', [AuthController::class,'postlogin']);
+Route::get('logout',[AuthController::class,'logout'])->middleware('auth');
+Route::middleware(['auth'])->group(function(){
+Route::get('/welcome', [WelcomeController::class, 'index'])->name('welcome');
 
 Route::group(['prefix' => 'level'], function () {
     Route::get('/', [LevelController::class, 'index']); // Halaman awal level
@@ -93,4 +102,5 @@ Route::group(['prefix' => 'user'], function () {
   Route::get('/{id}/delete_ajax', [UserController::class, 'confirm_ajax']);// tampilan form delete user ajax
   Route::delete('/{id}/delete_ajax', [UserController::class, 'delete_ajax']);// hapus data user ajax
   Route::delete('/{id}', [UserController::class, 'destroy']); // Hapus user
+});
 });
