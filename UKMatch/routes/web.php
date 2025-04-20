@@ -20,17 +20,17 @@ Route::post('login', [AuthController::class, 'postlogin']);
 Route::post('logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
 
 Route::middleware(['auth'])->group(function () {
-
+    //route ke index
     Route::get('/welcome', [WelcomeController::class, 'index'])->name('welcome');
 
-    // Profil untuk semua user
+    // route untuk semua user
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::get('/ukm/{id}/show_ajax', [UkmController::class, 'show_ajax']);
 
     // UKM (lihat saja) untuk Mahasiswa
     Route::middleware(['auth', 'authorize:MHS'])->group(function () {
       Route::get('/ukm/mahasiswa', [UkmController::class, 'indexMahasiswa'])->name('ukm.indexMahasiswa');
       Route::post('ukm/list_mahasiswa', [UkmController::class, 'listUkmMahasiswa']);
-      Route::get('/ukm/{id}/show_ajax', [UkmController::class, 'show_ajax']);
   });
   
 
@@ -84,7 +84,6 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/create_ajax', [UkmController::class, 'create_ajax']);
             Route::post('/ajax', [UkmController::class, 'store_ajax']);
             Route::get('/{id}', [UkmController::class, 'show']);
-            Route::get('/{id}/show_ajax', [UkmController::class, 'show_ajax']);
             Route::get('/{id}/edit', [UkmController::class, 'edit']);
             Route::put('/{id}', [UkmController::class, 'update']);
             Route::get('/{id}/edit_ajax', [UkmController::class, 'edit_ajax']);
