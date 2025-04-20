@@ -11,15 +11,20 @@
             <p><strong>Username:</strong> {{ $user->username }}</p>
             <p><strong>Role:</strong>
                 @if ($user->level)
-                    {{ $user->level->level_nama }}
+                {{ $user->level->level_nama }}
                 @else
-                    Tidak ada level
+                Tidak ada level
                 @endif
             </p>
         </div>
         <div class="card-footer d-flex justify-content-start">
             <a href="{{ url('/welcome') }}" class="btn btn-secondary me-3"><i class="fas fa-arrow-left"></i> Kembali</a>
-            <a href="{{ url('/logout') }}" class="btn btn-danger"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="btn btn-danger">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </form>
         </div>
     </div>
 </div>

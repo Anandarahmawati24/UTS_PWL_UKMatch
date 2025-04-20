@@ -30,7 +30,7 @@
             </div>
         </div>
 
-        <!-- Table untuk Menampilkan UKM -->
+        <!-- Table to display UKM -->
         <table class="table table-bordered table-striped table-hover table-sm" id="table_ukm">
             <thead>
                 <tr>
@@ -39,16 +39,16 @@
                     <th>Email</th>
                     <th>Kategori</th>
                     <th>Status</th>
-                    <th>Aksi</th> <!-- Kolom untuk tombol aksi (Detail) -->
+                    <th>Aksi</th> <!-- Kolom untuk aksi (Detail) -->
                 </tr>
             </thead>
+            <tbody>
+                <!-- Data akan dimuat menggunakan DataTables -->
+            </tbody>
         </table>
     </div>
 </div>
-
-<!-- Modal untuk Detail -->
 <div id="myModal" class="modal fade animate shake" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" data-width="75%" aria-hidden="true"></div>
-
 @endsection
 
 @push('css')
@@ -56,28 +56,27 @@
 
 @push('js')
 <script>
-    // Fungsi untuk menampilkan modal saat klik Detail
-    function modalAction(element) {
-        let url = typeof element === "string" ? element : element.getAttribute("data-url");
-        $('#myModal').load(url, function() {
-            $('#myModal').modal('show');
-        });
-    }
-
+           function modalAction(element) {
+    let url = typeof element === "string" ? element : element.getAttribute("data-url");
+    $('#myModal').load(url, function() {
+        $('#myModal').modal('show');
+    });
+}
     var dataUkm;
     $(document).ready(function() {
+        // Initialize DataTable
         dataUkm = $('#table_ukm').DataTable({
             serverSide: true,
             ajax: {
-                "url": "{{ url('ukm/list') }}",  // URL untuk mengambil data UKM
+                "url": "{{ url('ukm/list_mahasiswa') }}",  // URL yang sesuai dengan route di controller
                 "type": "POST",
                 "data": function(d) {
-                    d.id_kategori = $('#kategori_filter').val();  // Kirim filter kategori
+                    d.id_kategori = $('#kategori_filter').val();  // Mengirim filter kategori
                 }
             },
             columns: [
                 {
-                    data: "DT_RowIndex",  // Kolom nomor urut
+                    data: "DT_RowIndex",  // Kolom index (nomor urut)
                     className: "text-center",
                     orderable: false,
                     searchable: false
@@ -86,7 +85,7 @@
                     data: "nama_ukm"  // Nama UKM
                 },
                 {
-                    data: "email"  // Email UKM
+                    data: "email"  // Email
                 },
                 {
                     data: "nama_kategori"  // Nama kategori UKM

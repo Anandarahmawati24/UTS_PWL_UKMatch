@@ -10,10 +10,10 @@ class UserModel extends Authenticatable
 {
     use HasFactory;
 
-    protected $table = 'm_user';
-    protected $primaryKey = 'user_id';
+    protected $table = 'm_user'; // nama tabel
+    protected $primaryKey = 'user_id'; //pk
 
-    protected $fillable = ['username','nama','password','id_level','created_at','update_at',];
+    protected $fillable = ['username','nama','password','id_level','created_at','update_at',];//kolom yg diisi
 
     protected $hidden = ['password',]; // jangan ditampilkan saat select
 
@@ -31,5 +31,19 @@ class UserModel extends Authenticatable
       {
           return 'username'; // Menggunakan kolom username
       }
-  
+
+    //mendapatkan nama role
+    public function getRoleName() : string {
+        return $this->level->level_nama;
+    }
+
+    // cek user apakah memiliki role tertentu
+    public function hasRole($role): bool {
+        return $this->level->level_kode == $role;
+    }
+
+    //mendapatkan kode role
+    public function getRole(){
+        return $this->level->level_kode;
+    }
 }

@@ -6,6 +6,7 @@ use App\Models\KategoriUkmModel;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class UkmController extends Controller
 {
@@ -304,4 +305,47 @@ public function show_ajax($id) {
     // Kembalikan data UKM dalam bentuk view HTML
     return view('ukm.show_ajax', compact('ukm'));
 }
+
+public function indexMahasiswa()
+{
+    $breadcrumb = (object)[
+        'title' => 'Daftar UKM',
+        'list' => ['Home', 'UKM']
+    ];
+
+    $page = (object)[
+        'title' => 'Daftar UKM untuk Mahasiswa'
+    ];
+
+    $activeMenu = 'ukm-mahasiswa'; // Menandai menu aktif untuk mahasiswa
+    
+    // Ambil data kategori UKM
+    $kategori_ukm = KategoriUkmModel::all();
+
+    // Ambil data UKM yang akan ditampilkan untuk mahasiswa
+    $ukm = UkmModel::all();
+
+    return view('ukm.indexMahasiswa', compact('breadcrumb', 'page', 'activeMenu', 'kategori_ukm', 'ukm'));
+}
+
+public function listUkmMahasiswa(Request $request)
+{
+    $ukm = UkmModel::with('kategori')->select('id_ukm', 'nama_ukm', 'id_kategori', 'email', 'alamat', 'tanggal_berdiri', 'status');
+
+        if ($request->id_kategori) {
+            $ukm->where('id_kategori', $request->id_kategori);
+        }
+        return DataTables::of($ukm)
+        ->addIndexColumn()
+        ->addColumn('nama_kategori', function ($ukm) {
+            return $ukm->kategori->nama_kategori ?? '-';
+        })
+        ->addColumn('aksi', function ($ukm) {
+            $btn = '<button onclick="modalAction(\''.url('/ukm/' . $ukm->id_ukm . '/show_ajax').'\')" class="btn btn-info btn-sm">Detail</button> ';
+            return $btn;
+        })
+        ->rawColumns(['aksi'])
+        ->make(true);
+}
+
 }

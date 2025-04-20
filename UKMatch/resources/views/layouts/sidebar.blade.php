@@ -23,7 +23,8 @@
                 </a>
             </li>
 
-            <!-- Master Data -->
+            <!-- Menu Admin -->
+            @if(Auth::user()->id_level == 1)
             <li class="nav-header">Master Data</li>
 
             <li class="nav-item">
@@ -53,9 +54,25 @@
                     <p>Data UKM</p>
                 </a>
             </li>
+            @endif
+
+            <!-- Profil (untuk semua user) -->
             <li class="nav-item">
                 <a href="{{ url('/profile') }}" class="nav-link {{ ($activeMenu == 'profile') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-user"></i>
                     <p>Profil</p>
                 </a>
             </li>
+
+            <!-- Menu Mahasiswa -->
+            @if(Auth::user()->id_level == 2)
+            <li class="nav-item">
+                <a href="{{ url('/ukm/mahasiswa') }}" class="nav-link {{ ($activeMenu == 'ukm-mahasiswa') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-users"></i>
+                    <p>UKM</p>
+                </a>
+            </li>
+            @endif
+        </ul>
+    </nav>
+</div>
