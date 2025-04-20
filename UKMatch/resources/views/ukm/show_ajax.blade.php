@@ -38,6 +38,10 @@
                         <td>{{ $ukm->tanggal_berdiri }}</td>
                     </tr>
                     <tr>
+                        <th>Deskripsi:</th>
+                        <td>{{ $ukm->deskripsi }}</td>
+                    </tr>
+                    <tr>
                         <th>Status:</th>
                         <td>{{ $ukm->status }}</td>
                     </tr>
