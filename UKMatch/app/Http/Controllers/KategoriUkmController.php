@@ -9,9 +9,10 @@ use Illuminate\Support\Facades\Validator;
 
 class KategoriUkmController extends Controller
 {
+    //controller halaman index
     public function index()
     {
-        $breadcrumb = (object)[
+        $breadcrumb = (object)[ //menampilkan title dan list untuk breadcrumb (jika ada)
             'title' => 'Daftar Kategori UKM',
             'list' => ['Beranda', 'Kategori UKM']
         ];
@@ -22,18 +23,19 @@ class KategoriUkmController extends Controller
 
         $activeMenu = 'kategori_ukm';
         // Ambil data kategori untuk dropdown filter
-    $kategori_ukm = KategoriUkmModel::select('id_kategori', 'nama_kategori')->get();
+        $kategori_ukm = KategoriUkmModel::select('id_kategori', 'nama_kategori')->get();
 
-    return view('kategori_ukm.index', compact('breadcrumb', 'page', 'activeMenu', 'kategori_ukm'));
+        return view('kategori_ukm.index', compact('breadcrumb', 'page', 'activeMenu', 'kategori_ukm'));
     }
 
+    //menampilkan data tabel
     public function list(Request $request)
     {
         $kategori = KategoriUkmModel::select('id_kategori', 'nama_kategori', 'created_at', 'updated_at');
         // Filter berdasarkan kategori jika ada
-    if ($request->kategori_filter) {  // Gunakan kategori_filter, sesuai yang dikirim dari frontend
-        $kategori->where('id_kategori', $request->kategori_filter);  // Filter berdasarkan id_kategori
-    }
+        if ($request->kategori_filter) {  // Gunakan kategori_filter, sesuai yang dikirim dari frontend
+            $kategori->where('id_kategori', $request->kategori_filter);  // Filter berdasarkan id_kategori
+        }
         return DataTables::of($kategori)
             ->addIndexColumn()
             ->addColumn('aksi', function ($item) {
@@ -46,7 +48,7 @@ class KategoriUkmController extends Controller
             ->make(true);
     }
 
-    public function create()
+    public function create() //menampilkan halaman tambah data ver belum ajax
     {
         $breadcrumb = (object)[
             'title' => 'Tambah Kategori UKM',
@@ -62,7 +64,7 @@ class KategoriUkmController extends Controller
         return view('kategori_ukm.create', compact('breadcrumb', 'page', 'activeMenu'));
     }
 
-    public function store(Request $request)
+    public function store(Request $request) // menyimpan data tapi belum ajax
     {
         $request->validate([
             'nama_kategori' => 'required|string|max:255|unique:kategori_ukm,nama_kategori',
@@ -138,7 +140,7 @@ class KategoriUkmController extends Controller
         }
     }
 
-    public function create_ajax()
+    public function create_ajax() // menampilkan halaman tambah data ajax
     {
         $kategori_ukm = KategoriUkmModel::select('id_kategori', 'nama_kategori')->get();
         return view('kategori_ukm.create_ajax')->with('kategori_ukm', $kategori_ukm);
