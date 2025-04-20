@@ -7,6 +7,7 @@ use App\Http\Controllers\LevelController;
 use App\Http\Controllers\KategoriUkmController;
 use App\Http\Controllers\UkmController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Auth;
 use Monolog\Level;
 
@@ -103,4 +104,5 @@ Route::group(['prefix' => 'user'], function () {
   Route::delete('/{id}/delete_ajax', [UserController::class, 'delete_ajax']);// hapus data user ajax
   Route::delete('/{id}', [UserController::class, 'destroy']); // Hapus user
 });
+Route::get('/profile', [ProfileController::class, 'index'])->name('profile')->middleware('auth');
 });

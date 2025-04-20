@@ -39,17 +39,23 @@
                     <p>Data User</p>
                 </a>
             </li>
-            
+
             <li class="nav-item">
-    <a href="{{ url('/kategori_ukm') }}" class="nav-link {{ ($activeMenu == 'kategori_ukm') ? 'active' : '' }}">
-        <i class="nav-icon far fa-bookmark"></i>
-        <p>Kategori UKM</p>
-    </a>
-</li>
+                <a href="{{ url('/kategori_ukm') }}" class="nav-link {{ ($activeMenu == 'kategori_ukm') ? 'active' : '' }}">
+                    <i class="nav-icon far fa-bookmark"></i>
+                    <p>Kategori UKM</p>
+                </a>
+            </li>
 
             <li class="nav-item">
                 <a href="{{ url('/ukm') }}" class="nav-link {{ ($activeMenu == 'ukm') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-users"></i>
                     <p>Data UKM</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ url('/profile') }}" class="nav-link {{ ($activeMenu == 'profile') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-user"></i>
+                    <p>Profil</p>
                 </a>
             </li>
