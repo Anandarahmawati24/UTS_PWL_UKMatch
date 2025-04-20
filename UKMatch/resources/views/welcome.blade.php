@@ -2,12 +2,12 @@
 @section('title', 'Dashboard')
 @section('content')
 <div class="container-fluid">
-    <!-- Header Selamat Datang -->
+     <!-- Header Selamat Datang -->
     <div class="row mb-4">
         <div class="col-12">
-            <div class="p-4 bg-gradient-success text-white rounded shadow-sm">
+            <div class="p-4 rounded shadow-sm" style="background: linear-gradient(135deg, #03459d, #ffd704); color: white;">
                 <h2 class="mb-0">Selamat Datang di <strong>UKMatch</strong></h2>
-                <p class="mb-0">Sistem Informasi Manajemen UKM</p>
+                <p class="mb-0">Sistem Informasi Manajemen Unit Kegiatan Mahasiswa</p>
             </div>
         </div>
     </div>
@@ -18,7 +18,7 @@
             <div class="card shadow border-0 bg-primary text-white h-100">
                 <div class="card-body">
                     <h5 class="card-title"><i class="fas fa-users"></i> Manajemen UKM</h5>
-                    <p class="card-text">Kelola data UKM mulai dari nama, deskripsi, email, hingga status dan tanggal berdiri.</p>
+                    <p class="card-text">Kelola data UKM mulai dari nama, deskripsi, email, hingga status dan tanggal berdirinya UKM.</p>
                 </div>
             </div>
         </div>
@@ -36,7 +36,7 @@
             <div class="card shadow border-0 bg-info text-white h-100">
                 <div class="card-body">
                     <h5 class="card-title"><i class="fas fa-user-cog"></i> Manajemen User</h5>
-                    <p class="card-text">Admin mengelola user dengan level dan hak akses berbeda sesuai peran di sistem.</p>
+                    <p class="card-text">Admin mengelola user dengan role dan hak akses berbeda sesuai peran di sistem.</p>
                 </div>
             </div>
         </div>
@@ -45,7 +45,7 @@
             <div class="card shadow border-0 bg-secondary text-white h-100">
                 <div class="card-body">
                     <h5 class="card-title"><i class="fas fa-layer-group"></i> Level Pengguna</h5>
-                    <p class="card-text">Pengaturan level pengguna seperti Admin, Mahasiswa, Pembina UKM, dsb.</p>
+                    <p class="card-text">Pengaturan level pengguna untuk Admin dan Mahasiswa</p>
                 </div>
             </div>
         </div>

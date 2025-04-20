@@ -28,9 +28,9 @@ ack">
         <!-- /.login-logo -->
         <div class="card card-outline card-primary">
             <div class="card-header text-center"><a href="{{ url('/') }}"
-                    class="h1"><b>Admin</b>LTE</a></div>
+                    class="h1"><b>UKM</b>atch</a></div>
             <div class="card-body">
-                <p class="login-box-msg">Sign in to start your session</p>
+                <p class="login-box-msg">Silahkan login menggunakan username dan password anda</p>
                 <form action="{{ url('login') }}" method="POST" id="form-login">
                     @csrf
                     <div class="input-group mb-3">
