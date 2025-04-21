@@ -270,7 +270,16 @@ public function confirm_ajax(string $id) {
 public function delete_ajax(Request $request, string $id) {
     if ($request->ajax() || $request->wantsJson()) {
         $level = LevelModel::find($id);
+
         if ($level) {
+            // Cek apakah level ini digunakan oleh user
+            if ($level->users()->exists()) {
+                return response()->json([
+                    'status'  => false,
+                    'message' => 'Gagal menghapus level. Data masih digunakan oleh pengguna.'
+                ]);
+            }
+
             $level->delete();
             return response()->json([
                 'status'  => true,
@@ -283,8 +292,10 @@ public function delete_ajax(Request $request, string $id) {
             ]);
         }
     }
+
     return redirect('/');
 }
+
 public function show_ajax($id)
 {
     $level = LevelModel::find($id);

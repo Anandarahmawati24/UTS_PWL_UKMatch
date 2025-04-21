@@ -224,27 +224,37 @@ class KategoriUkmController extends Controller
         $kategori_ukm = KategoriUkmModel::find($id);
         return view('kategori_ukm.confirm_ajax', ['kategori_ukm' => $kategori_ukm]);
     }
+// Hapus data kategori UKM via AJAX
+public function delete_ajax(Request $request, string $id)
+{
+    if ($request->ajax() || $request->wantsJson()) {
+        $kategori = KategoriUkmModel::find($id);
 
-    // Hapus data kategori UKM via AJAX
-    public function delete_ajax(Request $request, string $id)
-    {
-        if ($request->ajax() || $request->wantsJson()) {
-            $kategori = KategoriUkmModel::find($id);
-            if ($kategori) {
-                $kategori->delete();
-                return response()->json([
-                    'status'  => true,
-                    'message' => 'Data kategori UKM berhasil dihapus'
-                ]);
-            } else {
+        if ($kategori) {
+            // Cek apakah kategori ini digunakan oleh UKM
+            if ($kategori->ukm()->exists()) {
                 return response()->json([
                     'status'  => false,
-                    'message' => 'Data tidak ditemukan'
+                    'message' => 'Gagal menghapus kategori. Data masih digunakan oleh UKM.'
                 ]);
             }
+
+            $kategori->delete();
+            return response()->json([
+                'status'  => true,
+                'message' => 'Data kategori UKM berhasil dihapus'
+            ]);
+        } else {
+            return response()->json([
+                'status'  => false,
+                'message' => 'Data tidak ditemukan'
+            ]);
         }
-        return redirect('/');
     }
+
+    return redirect('/');
+}
+
 
     // Menampilkan detail kategori UKM
     public function show_ajax($id_kategori)
